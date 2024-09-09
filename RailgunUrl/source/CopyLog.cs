@@ -1,6 +1,6 @@
+using System;
+using System.Windows.Forms;
 namespace RailgunUrl;
-
-
 public partial class CopyLog {
     private AppUI appUI;
     public CopyLog(AppUI appUI) {

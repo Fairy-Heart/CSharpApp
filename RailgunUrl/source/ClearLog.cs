@@ -1,3 +1,5 @@
+using System;
+using System.Windows.Forms;
 namespace RailgunUrl;
 
 public partial class ClearLog {

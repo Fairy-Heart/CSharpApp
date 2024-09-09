@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Windows.Forms;
 namespace RailgunUrl;
 
 public partial class SaveLog {

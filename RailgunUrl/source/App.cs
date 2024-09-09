@@ -1,6 +1,8 @@
+using System;
+using System.Windows.Forms;
 namespace RailgunUrl;
 
-public static class Program {
+public static class App{
 
     [STAThread]
     static void Main() {
