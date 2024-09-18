@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.VisualBasic;
 
 namespace EncryptionApp.EncryptionText;
 
@@ -49,20 +48,49 @@ public partial class InputText {
     }
 
     private void SendDataForEncryptionText(object? sender, EventArgs eventArgs) {
+        string MethodValue = EncryptionApp.MenuSelectMethod.Text;
         string TextNeedEncryption = EncryptionApp.EnterTextBox.Text;
         
         if(string.IsNullOrWhiteSpace(TextNeedEncryption)) {
             MessageBox.Show("You need enter some text to decode/encryption!");
             return;
         }
-        KeyForDecode = GenerateKeyForDecode();
-        byte[] TextWhenEncryption = EncryptionText(TextNeedEncryption, KeyForDecode);
+        switch(MethodValue) {
+            case "AES Encryption":
+            KeyForDecode = GenerateKeyForDecode();
+            byte[] TextWhenEncryption = EncryptionText(TextNeedEncryption, KeyForDecode);
 
-        TextEncryption = Convert.ToBase64String(TextWhenEncryption);
+            TextEncryption = Convert.ToBase64String(TextWhenEncryption);
         
        
-        EncryptionApp.LogResult.Text = $"{TextEncryption}";
-        EncryptionApp.ShowKeyForDecode.Text = $"{KeyForDecode}";
+            EncryptionApp.LogResult.Text = $"{TextEncryption}";
+            EncryptionApp.ShowKeyForDecode.Text = $"{KeyForDecode}";
+            break;
+
+            case "Base64 Encryption":
+            string EncryptedText = Base64Encryption(TextNeedEncryption);
+            EncryptionApp.LogResult.Text = $"{EncryptedText}";
+            EncryptionApp.ShowKeyForDecode.Text = "";
+            break;
+
+            case "Hash with SHA512":
+               try {
+
+                if(string.IsNullOrWhiteSpace(TextNeedEncryption)) {
+                    MessageBox.Show("Your file is emty! No need hash");
+                    return;
+                }
+
+                string TextSHA512 = HashSHA512(TextNeedEncryption);
+
+                EncryptionApp.LogResult.Text = $"{TextSHA512}";
+                MessageBox.Show($"Hash with SHA512 method successfully!");
+                EncryptionApp.ShowKeyForDecode.Text = "";
+               } catch {
+
+               }
+            break;
+        }
     }
 
     private string GenerateKeyForDecode() {
@@ -89,6 +117,30 @@ public partial class InputText {
                 }
             }
         }
+    }
+
+    private string Base64Encryption(string OriginalText) {
+        byte[] OriginalTextBytes = System.Text.Encoding.UTF8.GetBytes(OriginalText);
+
+        string Base64Text = Convert.ToBase64String(OriginalTextBytes);
+
+        return Base64Text;
+    }
+
+
+    private string HashSHA512(string TextToHash) {
+        byte[]TextBytes = Encoding.UTF8.GetBytes(TextToHash);
+
+        using SHA512 Hash512 = SHA512.Create();
+        byte[] HashStringBytes = Hash512.ComputeHash(TextBytes);
+
+        StringBuilder HashString = new StringBuilder();
+
+        foreach(byte Bytes in HashStringBytes) {
+            HashString.Append(Bytes.ToString("x2"));
+        }
+
+        return HashString.ToString();
     }
     
 }

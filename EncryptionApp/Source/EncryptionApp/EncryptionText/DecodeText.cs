@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.VisualBasic;
+using System.Text.RegularExpressions;
 
 namespace EncryptionApp.EncryptionText;
 
@@ -38,21 +38,59 @@ public partial class DecodeText {
     }
 
     private void InputKeyToDecodeTextButtonClicked(object? sender, EventArgs eventArgs) {
+        string MethodValue = AppUIDecodeText.MenuSelectMethod.Text;
         string TextEncryption = AppUIDecodeText.EnterTextBox.Text;
 
         string KeyDecode = AppUIDecodeText.KeyDecode.Text;
 
-        if(string.IsNullOrWhiteSpace(TextEncryption) || string.IsNullOrWhiteSpace(KeyDecode)) {
-            MessageBox.Show("Text encryption or KEY decode is emty! Can't decode");
+         if(MethodValue == "Hash with SHA512") {
+            MessageBox.Show("Can't decode SHA512 HASH!");
             return;
         }
 
-        try {
-        string OriginalText = DecryptText(TextEncryption, KeyDecode);
+        if(string.IsNullOrWhiteSpace(TextEncryption)) {
+            MessageBox.Show("Text encryption is emty! Can't decode");
+            return;
+        }
 
-        AppUIDecodeText.LogResult.Text = $"{OriginalText}";
-        } catch {
+        if(MethodValue == "AES Encryption" && string.IsNullOrWhiteSpace(KeyDecode)) {
+            MessageBox.Show("AES need KEY to decode! Please input your KEY");
+            return;
+        }
+
+       
+
+        switch(MethodValue){
+            case "AES Encryption":
+            try {
+              string OriginalText = DecryptText(TextEncryption, KeyDecode);
+
+              AppUIDecodeText.LogResult.Text = $"{OriginalText}";
+              MessageBox.Show($"Decode with method {MethodValue} successfuly!");
+            } catch {
             // Do nothing. Error handling is define in DecryptText method :D
+            }
+            break;
+
+            case "Base64 Encryption":
+            try {
+            string IsBase64 = @"^[a-zA-Z0-9+/]*={0,2}$";
+
+            string Base64Code = TextEncryption;
+
+            if(Regex.IsMatch(Base64Code, IsBase64)) {
+                string TextBase64Decode = Base64Decode(Base64Code);
+
+                AppUIDecodeText.LogResult.Text = $"{TextBase64Decode}";
+                AppUIDecodeText.ShowKeyForDecode.Text = "";
+                MessageBox.Show($"Decode with method {MethodValue} successfuly!");
+                return;
+            }
+
+            } catch {
+               // Do nothing. Error handling set to Base64Decode method.
+            }
+            break;
         }
     }
 
@@ -78,6 +116,19 @@ public partial class DecodeText {
     } catch {
         MessageBox.Show("KEY or Text Encryption is incorrect!");
         throw;
+        }
+    }
+
+
+    private string Base64Decode(string Base64Text) {
+        try {
+        byte[] Base64TextBytes = Convert.FromBase64String(Base64Text);
+
+        string OrignialText = System.Text.Encoding.UTF8.GetString(Base64TextBytes);
+        return OrignialText;
+        } catch {
+            MessageBox.Show("Invalid Base64 encryption!");
+            throw;
         }
     }
 }

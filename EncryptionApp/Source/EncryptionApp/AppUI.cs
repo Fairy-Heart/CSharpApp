@@ -1,4 +1,5 @@
 using EncryptionApp.EncryptionText;
+using EncryptionApp.EncryptionText.Options.Menu;
 
 namespace EncryptionApp;
 
@@ -20,10 +21,21 @@ public  partial class AppUI : Form {
     private readonly Button CopyLogResultButton;
 
     public readonly RichTextBox KeyDecode;
-    private readonly Label KeyDecodeDescription;
+    public readonly Label KeyDecodeDescription;
     private readonly DecodeText DecodeTextEncryption;
     
     private readonly Button DecodeButton;
+
+    private readonly EncryptionText.Options.FileEncryptionMethod.FileEncryption EncryptionFileMethod;
+    private readonly Button FileEncryptionButton;
+
+    private readonly EncryptionText.Options.FileEncryptionMethod.DecodeFile DecodeFile;
+    private readonly Button DecodeFileButton;
+
+    private readonly EncryptionText.Options.Menu.Menu SelectMenu;
+    public readonly ComboBox MenuSelectMethod;
+    private readonly Label MenuDescription;
+
     public AppUI(){
         Text = "Encryption App";
         Size = new Size(1200, 600);
@@ -73,7 +85,33 @@ public  partial class AppUI : Form {
         KeyDecodeDescription = new Label();
         DecodeButton = new Button();
         DecodeTextEncryption.InputKeyToDecodeText(KeyDecode, KeyDecodeDescription);
-        DecodeTextEncryption.InputKeyToDecodeTextButton(DecodeButton);        
+        DecodeTextEncryption.InputKeyToDecodeTextButton(DecodeButton);
+
+        // End.
+
+        // Method to encryption file:
+
+        EncryptionFileMethod = new EncryptionText.Options.FileEncryptionMethod.FileEncryption(this);
+        FileEncryptionButton = new Button();
+        EncryptionFileMethod.OpenFileToEncryptionButton(FileEncryptionButton);
+
+        // End.
+
+        // Method to decode file encrypted:
+
+        DecodeFile = new EncryptionText.Options.FileEncryptionMethod.DecodeFile(this);
+        DecodeFileButton = new Button();
+        DecodeFile.DecodeFileButton(DecodeFileButton);
+
+        // End.
+
+        // Method to select - encryption methods:
+        SelectMenu = new EncryptionText.Options.Menu.Menu(this);
+        MenuSelectMethod = new ComboBox();
+        MenuDescription = new Label();
+        SelectMenu.SetMenuForEncryptMethod(MenuSelectMethod, MenuDescription);
+
+        // End.
     }
 
 }
