@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "JfwdhPfUkuFbZOlJ7VZKH0Bp3R/hRMFraaYktBn/WDjvCL/lUZ0kGY5wldFB/r02AYzobmO3uZPmPFdblREWFA==",
+  "success": true,
+  "projectFilePath": "D:\\Codes\\csharp\\TextEditorApp\\TextEditorApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\admin\\.nuget\\packages\\avalonedit\\6.3.0.90\\avalonedit.6.3.0.90.nupkg.sha512"
+  ],
+  "logs": []
+}

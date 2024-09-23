@@ -1,0 +1,28 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "AvalonEdit/6.3.0.90": {
+        "runtime": {
+          "lib/net7.0-windows7.0/ICSharpCode.AvalonEdit.dll": {
+            "assemblyVersion": "6.3.0.90",
+            "fileVersion": "6.3.0.90"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AvalonEdit/6.3.0.90": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WVTb5MxwGqKdeasd3nG5udlV4t6OpvkFanziwI133K0/QJ5FvZmfzRQgpAjGTJhQfIA8GP7AzKQ3sTY9JOFk8Q==",
+      "path": "avalonedit/6.3.0.90",
+      "hashPath": "avalonedit.6.3.0.90.nupkg.sha512"
+    }
+  }
+}
