@@ -19,7 +19,6 @@ namespace TextEditorApp
         private readonly EditorArea.Ulti.NewFile SetNewFile;
         private readonly EditorArea.Ulti.OpenFile SetOpenFile;
         private readonly EditorArea.Ulti.SaveFile SetSaveFile;
-        private readonly EditorArea.Shorcut.Save SaveFileShortcut;
         private readonly EditorArea.Event.QuitSave QuitSave;
         private readonly EditorArea.Event.IsEdited IsEditedFile;
         private readonly EditorArea.Event.Counting SetCounting;
@@ -52,12 +51,6 @@ namespace TextEditorApp
 
             SetSaveFile = new EditorArea.Ulti.SaveFile(this);
             SaveFile.Click += SetSaveFile.SaveFileAction;
-
-
-            // Shortcut
-
-            SaveFileShortcut = new EditorArea.Shorcut.Save(this);
-            this.KeyDown += SaveFileShortcut.SaveShortcut;
 
             // Ask user when exit but forget save file
 
